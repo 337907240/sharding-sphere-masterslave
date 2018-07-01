@@ -41,6 +41,7 @@ import com.github.mapper.OrderMapper;
 import com.github.model.Order;
 import com.github.model.OrderItem;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -53,7 +54,29 @@ public class OrderService {
     @Resource private OrderMapper orderMapper;
     @Resource private OrderItemMapper orderItemMapper;
 
+    @Transactional
     public void demo() {
+
+        System.err.println(orderMapper.get(1L));
+
+        Order order = new Order();
+        order.setUserId(51);
+        order.setStatus("INSERT_TEST");
+        orderMapper.insert(order);
+        System.err.println(order);
+
+        System.err.println(orderMapper.get(order.getOrderId()));
+
+
+
+        OrderItem item = new OrderItem();
+        item.setOrderId(order.getOrderId());
+        item.setUserId(51);
+        orderItemMapper.insert(item);
+
+    }
+
+    public void demo1() {
 
         orderMapper.createIfNotExistsTable();
         orderItemMapper.createIfNotExistsTable();
@@ -81,15 +104,15 @@ public class OrderService {
 
         System.out.println(orderItemMapper.selectAll());
 
-        System.out.println("2.Delete--------------");
-        for (Long each : orderIds) {
-            orderMapper.delete(each);
-            orderItemMapper.delete(each);
-        }
-        System.out.println(orderItemMapper.selectAll());
-
-        orderItemMapper.dropTable();
-        orderMapper.dropTable();
+//        System.out.println("2.Delete--------------");
+//        for (Long each : orderIds) {
+//            orderMapper.delete(each);
+//            orderItemMapper.delete(each);
+//        }
+//        System.out.println(orderItemMapper.selectAll());
+//
+//        orderItemMapper.dropTable();
+//        orderMapper.dropTable();
     }
 
 }

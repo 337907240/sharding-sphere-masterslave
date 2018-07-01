@@ -20,6 +20,8 @@ package com.github.mapper;
 import com.github.model.Order;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 @Mapper
 public interface OrderMapper {
     
@@ -32,4 +34,6 @@ public interface OrderMapper {
     void delete(Long orderId);
     
     void dropTable();
+
+    Map get(Long orderId);
 }
